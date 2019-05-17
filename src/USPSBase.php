@@ -431,17 +431,19 @@ abstract class USPSBase
     protected function getValueByKey($array, $key)
     {
         foreach ($array as $k => $each) {
-            if ($k == $key) {
+            if ($k === $key) {
                 return $each;
             }
 
             if (is_array($each)) {
-                if ($return = $this->getValueByKey($each, $key)) {
+                $return = $this->getValueByKey($each, $key);
+                if ($return !== null) {
                     return $return;
                 }
             }
         }
 
         // Nothing matched
+        return null;
     }
 }
